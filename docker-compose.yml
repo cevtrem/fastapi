@@ -28,8 +28,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    ports:
-      - "5432:5432"
+    # No host port mapping needed; app connects via internal network
 
 volumes:
   postgres_data:

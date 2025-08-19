@@ -1,46 +1,77 @@
 import datetime
 from pydantic import BaseModel
 from typing import Literal
+import uuid
 
 
 class SuccessResponse(BaseModel):
     status: Literal['success']
 
 
-class CreateAdvertisementResponce(BaseModel):
+class CreateAdvertisementResponse(BaseModel):
     id: int
 
 
-class GetAdvertisementResponce(BaseModel):
+class GetAdvertisementResponse(BaseModel):
     id: int
     title: str
     description: str
     price: int
-    owner: str
     created_at: datetime.datetime
 
 
-class SearshAdvertisementResponce(BaseModel):
-    results: list[GetAdvertisementResponce]
+class SearchAdvertisementResponse(BaseModel):
+    results: list[GetAdvertisementResponse]
 
 
-class UpdateAdvertisementResponce(SuccessResponse):
+class UpdateAdvertisementResponse(SuccessResponse):
     pass
 
 
-class DeleteAdvertisementResponce(SuccessResponse):
+class DeleteAdvertisementResponse(SuccessResponse):
     pass
 
 
 class CreateAdvertisementRequest(BaseModel):
     title: str
     description: str
-    price: int
-    owner: str
+    price: int    
 
 
 class UpdateAdvertisementRequest(BaseModel):
     title: str | None = None
     description: str | None = None
     price: int | None = None
-    owner: str | None = None
+
+
+class LoginRequest(BaseModel):
+    name: str
+    password: str
+
+
+class LoginResponse(BaseModel):
+    token: uuid.UUID
+
+
+class CreateUserRequest(BaseModel):
+    name: str
+    password: str
+    role: Literal['user', 'admin'] | None = None
+
+
+class CreateUserResponse(BaseModel):
+    id: int
+
+
+class GetUserResponse(BaseModel):
+    id: int
+    name: str
+    role: str
+
+class UpdateUserRequest(BaseModel):
+    name: str | None = None
+    password: str | None = None
+    role: Literal['user', 'admin'] | None = None
+
+class DeleteUserResponse(SuccessResponse):
+    pass

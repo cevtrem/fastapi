@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from models import ORM_CLS, ORM_OBJ
+from app.models import ORM_CLS, ORM_OBJ
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -22,5 +22,6 @@ async def get_item_by_id(session: AsyncSession,
 
 
 async def delete_item(session: AsyncSession, item: ORM_OBJ):
-    await session.delete(item)
+    session.delete(item)
     await session.commit()
+
